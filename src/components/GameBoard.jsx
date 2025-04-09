@@ -7,16 +7,17 @@ const initialGameBoard = [
 ];
 
 
-export default function GameBoard(){
+export default function GameBoard({onSelectSquare,  activePlayerSymbol}){
 
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     function handleSelectSquare(rowIndex, colIndex){
         setGameBoard((prevGameBoard) => {
             const updateBoard = [...prevGameBoard.map(innerArray => [...innerArray])];// burada eski elamanları da "..."bu operatör sayesinde ekleyebiliyoruz.
-            updateBoard[rowIndex][colIndex] = 'X';
+            updateBoard[rowIndex][colIndex] =  activePlayerSymbol;
             return updateBoard;
         });
+        onSelectSquare();
     }
 
     return(
@@ -24,7 +25,7 @@ export default function GameBoard(){
         <ol id="game-board">
         {gameBoard.map((row, rowIndex) => <li key={rowIndex}>
         <ol>
-            {row.map((playerSymbol, colIndex) => <li key={colIndex}> <button onClick= {() => {handleSelectSquare(rowIndex, colIndex)}}  >{playerSymbol}</button></li>)}
+            {row.map((playerSymbol, colIndex) => <li key={colIndex}> <button onClick= {() => {handleSelectSquare(rowIndex, colIndex)}} >{playerSymbol}</button></li>)}
         </ol>
 
        </li>
